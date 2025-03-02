@@ -5,12 +5,19 @@ import pandas as pd
 import numpy as np
 import json
 import os
+from fastapi.middleware.cors import CORSMiddleware
 from sklearn.preprocessing import LabelEncoder, StandardScaler, OneHotEncoder
 from pydantic import BaseModel
 
 # Initialize FastAPI app
 app = FastAPI(title="Crop Recommendation API")
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allow frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Define input model
 class PredictionInput(BaseModel):
